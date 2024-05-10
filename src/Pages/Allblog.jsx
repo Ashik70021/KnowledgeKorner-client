@@ -1,25 +1,18 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const RecentBlog = () => {
+const Allblog = () => {
     const [blogs, setBlogs] = useState([]);
 
     useEffect(() => {
         fetch('fake.json')
             .then(res => res.json())
-            .then(data => {
-                if (data.length > 6) {
-                    data = data.slice(0, 6);
-                }
-                setBlogs(data)
-
-            });
-            
+            .then(data => setBlogs(data));
     })
     return (
         <div>
             <div className="mt-16 text-center space-y-6 ">
-                <h1 className="text-4xl font-bold">Recent Blog</h1>
+                <h1 className="text-4xl font-bold">All Blog</h1>
                 <p className="text-xl text-gray-700">Explore timely topics, engaging stories, and expert perspectives to keep your finger on the pulse of what's happening now.</p>
             </div>
 
@@ -36,7 +29,7 @@ const RecentBlog = () => {
                             <p className="mt-4 text-gray-700 text-lg">{blog.description.substring(0,100)} . . . .</p>
                         </div>
                         <div className="mt-8 flex justify-around">
-                        <Link to={`/blogdetails/${blog._id}`}><button type="button" className="btn bg-[#912BBC] border-none text-xl w-full px-9  font-semibold rounded-md text-white">Details</button></Link>
+                        <Link to={`/viewdetails/${blog._id}`}><button type="button" className="btn bg-[#912BBC] border-none text-xl w-full px-9  font-semibold rounded-md text-white">Details</button></Link>
                         <Link to={`/viewdetails/${blog._id}`}><button type="button" className="btn bg-[#912BBC] border-none text-xl w-full px-8 font-semibold rounded-md text-white">Wishlist</button></Link>
                         </div>
                     </div>
@@ -48,4 +41,4 @@ const RecentBlog = () => {
     );
 };
 
-export default RecentBlog;
+export default Allblog;
