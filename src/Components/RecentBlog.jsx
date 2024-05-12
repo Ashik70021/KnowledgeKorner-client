@@ -1,21 +1,13 @@
-import { useEffect, useState } from "react";
+
 import { Link } from "react-router-dom";
 
-const RecentBlog = () => {
-    const [blogs, setBlogs] = useState([]);
+const RecentBlog = ({blogs}) => {
+    // const { blogs } = blogs;
 
-    useEffect(() => {
-        fetch('fake.json')
-            .then(res => res.json())
-            .then(data => {
-                if (data.length > 6) {
-                    data = data.slice(0, 6);
-                }
-                setBlogs(data)
+    if (blogs && blogs.length > 6) {
+        blogs = blogs.slice(0, 6);
+    }
 
-            });
-            
-    })
     return (
         <div>
             <div className="mt-16 text-center space-y-6 ">

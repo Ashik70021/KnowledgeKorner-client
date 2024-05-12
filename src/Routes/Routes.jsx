@@ -6,6 +6,9 @@ import Login from "../Pages/Authentication/Login";
 import Register from "../Pages/Authentication/Register";
 import Allblog from "../Pages/Allblog";
 import BlogDetails from "../Pages/BlogDetails";
+import AddBlog from "../Pages/AddBlog";
+import UpdateBlog from "../Pages/UpdateBlog";
+import WishList from "../Pages/WishList";
 
 const router = createBrowserRouter([
     {
@@ -15,6 +18,7 @@ const router = createBrowserRouter([
             {
                 path: '/',
                 element: <Home></Home>,
+                loader: () => fetch(`${import.meta.env.VITE_API_URL}/blogs`),
             },
             {
                 path: '/login',
@@ -26,12 +30,25 @@ const router = createBrowserRouter([
             },
             {
                 path: '/allBlog',
-                element: <Allblog></Allblog>
+                element: <Allblog></Allblog>,
+                loader: () => fetch(`${import.meta.env.VITE_API_URL}/blogs`),
             },
             {
                 path: '/blogdetails/:id',
                 element: <BlogDetails></BlogDetails>,
-                loader: () => fetch('../../public/fake.json')
+                loader: ({params}) => fetch(`${import.meta.env.VITE_API_URL}/blog/${params.id}`)
+            },
+            {
+                path: '/addBlog',
+                element: <AddBlog></AddBlog>
+            },
+            {
+                path: '/updateBlog',
+                element: <UpdateBlog></UpdateBlog>
+            },
+            {
+                path: '/wishList',
+                element: <WishList></WishList>
             },
         ]
     }

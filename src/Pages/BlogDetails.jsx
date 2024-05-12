@@ -1,19 +1,49 @@
-import { useLoaderData, useParams } from "react-router-dom";
+import { useContext } from "react";
+import { useLoaderData} from "react-router-dom";
+import { AuthContext } from "../Provider/AuthProvider";
+import toast from "react-hot-toast";
+import axios from "axios";
 
 const BlogDetails = () => {
-    const items = useLoaderData();
-    const { id } = useParams();
-    const item = items.find(item => item._id === id)
-    console.log(item, id)
+    const { user } = useContext(AuthContext)
+    const blog = useLoaderData();
+    console.log(blog)
+
+    const handleFormSubmit = async e => {
+        e.preventDefault()
+        const form = e.target
+        const comments = form.comments.value
+        const id = blog._id
+        const comment = {
+            id, comments,
+            user_comment: {
+                email: user?.email,
+                name: user?.displayName,
+                photo: user?.photoURL,
+            }
+        }
+        try {
+            const { data } = await axios.post(
+                `${import.meta.env.VITE_API_URL}/comment`,
+                comment
+            )
+            console.log(data)
+            toast.success('comment successfully')
+            // navigate('/my-posted-blog')
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    
     return (
         <div>
             <div className="my-16 grid grid-cols-12 container mx-auto">
                 {/* left side */}
-                <div className="col-span-9 bg-red-500">
+                <div className="col-span-9">
                     <div className=" p-4 shadow-md bg-gray-50 text-gray-800">
                         <div className="flex justify-between pb-4 border-bottom">
                             <div className="flex items-center">
-                                <a rel="noopener noreferrer" href="#" className="mb-0 capitalize text-gray-800">{item.category}</a>
+                                <a rel="noopener noreferrer" href="#" className="mb-0 capitalize text-gray-800">{blog.category}</a>
                             </div>
                             <a rel="noopener noreferrer" href="#">See All</a>
                         </div>
@@ -26,9 +56,9 @@ const BlogDetails = () => {
                             </div>
                             <div className="space-y-2">
                                 <a rel="noopener noreferrer" href="#" className="block">
-                                    <h3 className="text-2xl font-semibold text-cyan-600">{item.title}</h3>
+                                    <h3 className="text-2xl font-semibold text-cyan-600">{blog.title}</h3>
                                 </a>
-                                <p className="text-xl leading-snug text-gray-600">{item.description}</p>
+                                <p className="text-xl leading-snug text-gray-600">{blog.description}</p>
                             </div>
                         </div>
                     </div>
@@ -136,8 +166,8 @@ const BlogDetails = () => {
             {/* Comment Section */}
             <div className="my-16 container mx-auto">
                 <h1 className="text-xl font-semibold my-4">Comments</h1>
-                <form >
-                    <textarea placeholder="Bio" className="textarea textarea-bordered textarea-md w-2/4" ></textarea>
+                <form onSubmit={handleFormSubmit} >
+                    <textarea placeholder="Bio" name='comments' id='comments' className="textarea textarea-bordered textarea-md w-2/4" ></textarea>
                     <div>
                         <button className="py-2 px-4 border rounded-lg bg-gray-500 text-white font-medium">Submit</button>
                     </div>

@@ -10,6 +10,7 @@ const Navbar = () => {
         <li className='text-lg '> <NavLink to="/featuredBlog">Featured Blog</NavLink> </li>
         <li className='text-lg '> <NavLink to="/addBlog">Add Blog</NavLink> </li>
         <li className='text-lg '> <NavLink to="/wishList">Wishlist</NavLink> </li>
+        <li className='text-lg '> <NavLink to="/updateBlog">Update Blog</NavLink> </li>
     </>
     return (
         <div className=" text-black bg-[#D875C7] relative z-10">

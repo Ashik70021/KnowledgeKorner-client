@@ -1,14 +1,7 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 
 const Allblog = () => {
-    const [blogs, setBlogs] = useState([]);
-
-    useEffect(() => {
-        fetch('fake.json')
-            .then(res => res.json())
-            .then(data => setBlogs(data));
-    })
+    const blogs = useLoaderData();
     return (
         <div>
             <div className="mt-16 text-center space-y-6 ">
