@@ -102,7 +102,7 @@ const UpdateBlog = () => {
 
                     </div>
                     <div className="w-2/4 mx-auto">
-                        <button className="btn border-none bg-[#912BBC] w-full text-xl text-white ">Add Place</button>
+                        <button className="btn border-none bg-[#912BBC] w-full text-xl text-white ">Update Place</button>
                     </div>
                 </form>
             </div>

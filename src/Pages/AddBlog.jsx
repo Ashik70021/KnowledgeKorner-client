@@ -6,13 +6,13 @@ import { AuthContext } from "../Provider/AuthProvider";
 import toast from 'react-hot-toast'
 import axios from "axios";
 
-import TimePicker from 'react-time-picker';
+
 
 const AddBlog = () => {
     // const navigate = useNavigate()
     const { user } = useContext(AuthContext)
     const [startDate, setStartDate] = useState(new Date())
-    const [value, onChange] = useState([]);
+    
 
     const handleFormSubmit = async e => {
         e.preventDefault()
@@ -22,9 +22,9 @@ const AddBlog = () => {
         const date = startDate
         const category = form.category.value
         const description = form.description.value
-        const time = value
+
         const blogData = {
-            blog_title, date, time, category, description,
+            blog_title, date, category, description,
             author: {
                 email,
                 name: user?.displayName,
@@ -97,7 +97,7 @@ const AddBlog = () => {
                     <div className="w-2/4 mx-auto">
                         <button className="btn border-none bg-[#912BBC] w-full text-xl text-white ">Add Place</button>
                     </div>
-                    <TimePicker onChange={onChange} value={value} />
+
                 </form>
             </div>
         </div>
