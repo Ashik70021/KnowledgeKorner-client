@@ -9,11 +9,14 @@ import BlogDetails from "../Pages/BlogDetails";
 import AddBlog from "../Pages/AddBlog";
 import UpdateBlog from "../Pages/UpdateBlog";
 import WishList from "../Pages/WishList";
+import Error from "../Pages/Error";
+import FeaturedBlog from "../Pages/FeaturedBlog";
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <Root></Root>,
+        errorElement: <Error></Error>,
         children: [
             {
                 path: '/',
@@ -51,6 +54,11 @@ const router = createBrowserRouter([
             {
                 path: '/wishList',
                 element: <WishList></WishList>
+            },
+            {
+                path: '/featuredBlog',
+                element: <FeaturedBlog></FeaturedBlog>,
+                loader: () => fetch(`${import.meta.env.VITE_API_URL}/blogs`),
             },
         ]
     }

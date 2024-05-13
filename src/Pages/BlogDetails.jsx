@@ -78,14 +78,14 @@ const BlogDetails = () => {
                         </div>
                         <div className="space-y-4">
                             <div className="space-y-2">
-                                <img src="https://source.unsplash.com/random/480x360/?4" alt="" className="block object-cover object-center w-full rounded-md h-[500px] bg-gray-500" />
+                                <img src={blog.image} alt="" className="block object-cover object-center w-full rounded-md h-[500px] bg-gray-500" />
                                 <div className="flex items-center text-xs">
                                     <span>6 min ago</span>
                                 </div>
                             </div>
                             <div className="space-y-2">
                                 <a rel="noopener noreferrer" href="#" className="block">
-                                    <h3 className="text-2xl font-semibold text-cyan-600">{blog.title}</h3>
+                                    <h3 className="text-2xl font-semibold text-cyan-600">{blog.blog_title}</h3>
                                 </a>
                                 <p className="text-xl leading-snug text-gray-600">{blog.description}</p>
                             </div>
@@ -203,13 +203,13 @@ const BlogDetails = () => {
                     placeholder="Bio" name='comments' id='comments' 
                     className="textarea textarea-bordered textarea-md w-2/4" 
                     ></textarea>
-                    <div>
+                    <div className="">
                         <button
                             className="py-2 px-4 border rounded-lg bg-gray-500 text-white font-medium"
                             disabled={isCurrentUserBlogOwner()}
                             onClick={handleFormSubmit}
                         >
-                            Post
+                            Comment
                         </button>
                     </div>
                 </form>
