@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import { useLoaderData} from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { useLoaderData } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -8,7 +8,11 @@ const BlogDetails = () => {
     const { user } = useContext(AuthContext)
     const blog = useLoaderData();
     console.log(blog)
+    const [comments, setComments] = useState([]);
+    console.log(comments)
 
+
+    // post a comment
     const handleFormSubmit = async e => {
         e.preventDefault()
         const form = e.target
@@ -29,12 +33,28 @@ const BlogDetails = () => {
             )
             console.log(data)
             toast.success('comment successfully')
+
             // navigate('/my-posted-blog')
         } catch (err) {
             console.log(err)
+            toast.error('Failed to post comment');
         }
     }
-    
+
+    // fetch comments from DB
+    useEffect(() => {
+
+        fetch(`${import.meta.env.VITE_API_URL}/comments`)
+            .then(res => res.json())
+            .then(data => {
+                // Filter comments based on the blog id
+                const specificComments = data.filter(comment => comment.id === blog._id);
+                setComments(specificComments);
+            })
+    }, [blog._id])
+
+
+
     return (
         <div>
             <div className="my-16 grid grid-cols-12 container mx-auto">
@@ -173,26 +193,28 @@ const BlogDetails = () => {
                     </div>
                 </form>
 
-                <div className="my-6 w-2/4 border-b-2">
-                    <div className="flex items-center">
-                        <img className="object-cover h-10 rounded-full" src="https://images.unsplash.com/photo-1586287011575-a23134f797f9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=48&q=60" alt="Avatar" />
-                        <a href="#" className="mx-2 font-semibold text-gray-700 dark:text-gray-200" role="link">Jone Doe</a>
+                {comments.map((comment, index) => (
+                    <div key={index} className="my-6 w-2/4 border-b-2">
+                        <div className="flex items-center">
+                            <img
+                                className="object-cover h-10 rounded-full"
+                                src={comment.user_comment.photo}
+                                alt="Avatar"
+                            />
+                            <a
+                                href="#"
+                                className="mx-2 font-semibold text-gray-700 dark:text-gray-200"
+                                role="link"
+                            >
+                                {comment.user_comment.name}
+                            </a>
+                        </div>
+                        <div className="mt-2">
+                            <p>{comment.comments}</p>
+                        </div>
+                        <p className="my-1">{/* Add date or timestamp here */}</p>
                     </div>
-                    <div className="mt-2">
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Suscipit eveniet assumenda quas officia, rem et.</p>
-                    </div>
-                    <p className="my-1">6 min ago</p>
-                </div>
-                <div className="my-6 w-2/4 border-b-2">
-                    <div className="flex items-center">
-                        <img className="object-cover h-10 rounded-full" src="https://images.unsplash.com/photo-1586287011575-a23134f797f9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=48&q=60" alt="Avatar" />
-                        <a href="#" className="mx-2 font-semibold text-gray-700 dark:text-gray-200" role="link">Jone Doe</a>
-                    </div>
-                    <div className="mt-2">
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Suscipit eveniet assumenda quas officia, rem et.</p>
-                    </div>
-                    <p className="my-1">6 min ago</p>
-                </div>
+                ))}
             </div>
         </div>
 
