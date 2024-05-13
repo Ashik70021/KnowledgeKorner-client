@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -11,6 +11,10 @@ const BlogDetails = () => {
     const [comments, setComments] = useState([]);
     console.log(comments)
 
+    // Function to check if the current user is the blog owner
+    const isCurrentUserBlogOwner = () => {
+        return user?.email === blog.author.email;
+    };
 
     // post a comment
     const handleFormSubmit = async e => {
@@ -63,9 +67,14 @@ const BlogDetails = () => {
                     <div className=" p-4 shadow-md bg-gray-50 text-gray-800">
                         <div className="flex justify-between pb-4 border-bottom">
                             <div className="flex items-center">
-                                <a rel="noopener noreferrer" href="#" className="mb-0 capitalize text-gray-800">{blog.category}</a>
+                                <a rel="noopener noreferrer" href="#" className="mb-0 capitalize text-gray-800 text-2xl">{blog.category}</a>
                             </div>
-                            <a rel="noopener noreferrer" href="#">See All</a>
+                            {/* Update Button */}
+                            {user?.email === blog.author.email && (
+                               <Link to={`/updateBlog/${blog._id}`}><button className="text-lg font-medium text-white py-1 px-4 border rounded-xl bg-[#912BBC]">
+                                    Update
+                                </button></Link>
+                            )}
                         </div>
                         <div className="space-y-4">
                             <div className="space-y-2">
@@ -87,11 +96,12 @@ const BlogDetails = () => {
                 {/* right side */}
                 <div className="col-span-3">
                     <div className="mt-8 mx-auto max-w-xs p-6 shadow-md rounded-xl sm:px-12 bg-gray-50 text-gray-800">
-                        <img src="https://source.unsplash.com/150x150/?portrait?3" alt="" className="w-32 h-32 mx-auto rounded-full bg-gray-500 aspect-square" />
+                        <img src={blog.author.photo} alt="" className="w-32 h-32 mx-auto rounded-full bg-gray-500 aspect-square" />
+                        <p className="mt-2 text-xl font-semibold text-center">Author</p>
                         <div className="space-y-4 text-center divide-y divide-gray-300">
                             <div className="my-2 space-y-1">
-                                <h2 className="text-xl font-semibold sm:text-2xl">Leroy Jenkins</h2>
-                                <p className="px-5 text-xs sm:text-base text-gray-600">Full-stack developer</p>
+                                <h2 className="text-xl font-semibold sm:text-2xl">{blog.author.name}</h2>
+                                <p className="px-5 text-xs sm:text-base text-gray-600">{blog.author.email}</p>
                             </div>
                             <div className="flex justify-center pt-2 space-x-4 align-center">
                                 <a rel="noopener noreferrer" href="#" aria-label="GitHub" className="p-2 rounded-md text-gray-800 hover:text-cyan-600">
@@ -187,9 +197,20 @@ const BlogDetails = () => {
             <div className="my-16 container mx-auto">
                 <h1 className="text-xl font-semibold my-4">Comments</h1>
                 <form onSubmit={handleFormSubmit} >
-                    <textarea placeholder="Bio" name='comments' id='comments' className="textarea textarea-bordered textarea-md w-2/4" ></textarea>
+                    <textarea 
+                    disabled={isCurrentUserBlogOwner()}
+                    title={isCurrentUserBlogOwner() ? "You cannot comment on your own blog" : ""}
+                    placeholder="Bio" name='comments' id='comments' 
+                    className="textarea textarea-bordered textarea-md w-2/4" 
+                    ></textarea>
                     <div>
-                        <button className="py-2 px-4 border rounded-lg bg-gray-500 text-white font-medium">Submit</button>
+                        <button
+                            className="py-2 px-4 border rounded-lg bg-gray-500 text-white font-medium"
+                            disabled={isCurrentUserBlogOwner()}
+                            onClick={handleFormSubmit}
+                        >
+                            Post
+                        </button>
                     </div>
                 </form>
 
@@ -212,7 +233,7 @@ const BlogDetails = () => {
                         <div className="mt-2">
                             <p>{comment.comments}</p>
                         </div>
-                        <p className="my-1">{/* Add date or timestamp here */}</p>
+                        <p className="my-1">{/* timestamp here */}</p>
                     </div>
                 ))}
             </div>

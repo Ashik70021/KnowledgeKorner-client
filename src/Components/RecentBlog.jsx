@@ -1,5 +1,4 @@
 
-
 import BlogCard from "./BlogCard";
 
 const RecentBlog = ({blogs}) => {
@@ -22,7 +21,7 @@ const RecentBlog = ({blogs}) => {
                 key={blog._id}
                 blog = {blog}
                 >
-
+                    
                 </BlogCard> )
             }
             </div>

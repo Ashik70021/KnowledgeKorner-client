@@ -37,7 +37,7 @@ const AddBlog = () => {
                 blogData
             )
             console.log(data)
-            toast.success('Blog updated successfully')
+            toast.success('Blog added successfully')
             // navigate('/my-posted-blog')
         } catch (err) {
             console.log(err)
