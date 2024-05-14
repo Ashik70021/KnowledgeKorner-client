@@ -1,36 +1,48 @@
-
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../Provider/AuthProvider';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
 const BlogCard = ({ blog }) => {
-    const { user } = useContext(AuthContext)
-    console.log(user)
-    const { _id, category, blog_title, description, image } = blog
-    console.log(_id)
+    const { user } = useContext(AuthContext);
+    const [wishlistBlogs, setWishlistBlogs] = useState([]);
+    console.log(user);
+    const { _id, category, blog_title, description, image } = blog;
+    console.log(_id);
 
     const handleWishlist = async () => {
-        const blog_id = _id
-        const email = user.email
-        const wishlist = {
-            blog_id, email
+        if (!user) {
+            toast.error('You need to be logged in to add to wishlist');
+            return;
         }
+
+        if (wishlistBlogs.includes(_id)) {
+            toast.error('This blog is already in your wishlist');
+            return;
+        }
+
+        const blog_id = _id;
+        const email = user.email;
+        const wishlist = {
+            blog_id,
+            email,
+        };
+
         try {
             const { data } = await axios.post(
                 `${import.meta.env.VITE_API_URL}/wishlist`,
                 wishlist
-            )
-            console.log(data)
-            toast.success('Added to wishlist successfully')
-
-            // navigate('/my-posted-blog')
+            );
+            console.log(data);
+            setWishlistBlogs((prev) => [...prev, blog_id]);
+            toast.success('Added to wishlist successfully');
         } catch (err) {
-            console.log(err)
-            toast.error('Failed to post comment');
+            console.log(err);
+            toast.error('Failed to add to wishlist');
         }
-    }
+    };
+
     return (
         <div className='mx-auto'>
             <div className="p-4 hover:-translate-y-5 duration-700 relative m-4 border-solid border-2 border-[#912BBC] max-w-sm rounded-md shadow-md dark:bg-gray-50 dark:text-gray-800">
@@ -41,8 +53,18 @@ const BlogCard = ({ blog }) => {
                     <p className="mt-4 text-gray-700 text-lg">{description.substring(0, 70)} . . . .</p>
                 </div>
                 <div className="mt-8 flex justify-around">
-                    <Link to={`/blogdetails/${_id}`}><button type="button" className="btn bg-[#912BBC] border-none text-xl w-full px-9  font-semibold rounded-md text-white">Details</button></Link>
-                    <Link onClick={() => handleWishlist(_id, user.email)}><button type="button" className="btn bg-[#912BBC] border-none text-xl w-full px-8 font-semibold rounded-md text-white">Wishlist</button></Link>
+                    <Link to={`/blogdetails/${_id}`}>
+                        <button type="button" className="btn bg-[#912BBC] border-none text-xl w-full px-9 font-semibold rounded-md text-white">
+                            Details
+                        </button>
+                    </Link>
+                    <button
+                        type="button"
+                        className="btn bg-[#912BBC] border-none text-xl  px-8 font-semibold rounded-md text-white"
+                        onClick={handleWishlist}
+                    >
+                        Wishlist
+                    </button>
                 </div>
             </div>
         </div>

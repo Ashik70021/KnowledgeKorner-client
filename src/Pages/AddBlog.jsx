@@ -5,6 +5,7 @@ import { AuthContext } from "../Provider/AuthProvider";
 // import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import axios from "axios";
+import { Navigate } from "react-router-dom";
 
 
 
@@ -12,7 +13,6 @@ const AddBlog = () => {
     // const navigate = useNavigate()
     const { user } = useContext(AuthContext)
     const [startDate, setStartDate] = useState(new Date())
-    
 
     const handleFormSubmit = async e => {
         e.preventDefault()
@@ -38,7 +38,8 @@ const AddBlog = () => {
             )
             console.log(data)
             toast.success('Blog added successfully')
-            // navigate('/my-posted-blog')
+            e.target.reset();
+            Navigate('/my-posted-blog')
         } catch (err) {
             console.log(err)
         }

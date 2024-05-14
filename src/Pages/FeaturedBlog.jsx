@@ -40,7 +40,11 @@ const FeaturedBlog = () => {
     }));
 
     return (
-        <div className='mt-24 container mx-auto'>
+        <div className='mt-24 container mx-auto text-xl'>
+            <div className="mt-8 text-center space-y-6 mb-16">
+                <h1 className="text-4xl font-bold">Top 10 Blogs</h1>
+                <p className="text-xl text-gray-700">Explore timely topics, engaging stories, and expert perspectives to keep your finger on the pulse of what's happening now.</p>
+            </div>
             <DataTable
                 columns={columns}
                 data={data}

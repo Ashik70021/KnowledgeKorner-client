@@ -39,29 +39,27 @@ const router = createBrowserRouter([
             },
             {
                 path: '/blogdetails/:id',
-                element:
-                    <PrivateRoute>
-                        <BlogDetails></BlogDetails>
-                    </PrivateRoute>,
+                element: <BlogDetails></BlogDetails>,
                 loader: ({params}) => fetch(`${import.meta.env.VITE_API_URL}/blog/${params.id}`)
                 
 
             },
             {
                 path: '/addBlog',
-                element: <AddBlog></AddBlog>
+                element:<PrivateRoute> <AddBlog></AddBlog> </PrivateRoute>
             },
             {
                 path: '/updateBlog/:id',
-                element: <UpdateBlog></UpdateBlog>
+                element:<PrivateRoute><UpdateBlog></UpdateBlog></PrivateRoute> 
             },
             {
                 path: '/wishList',
-                element: <WishList></WishList>
+                element:<PrivateRoute> <WishList></WishList></PrivateRoute>,
+                loader: () => fetch(`${import.meta.env.VITE_API_URL}/wishlist`),
             },
             {
                 path: '/featuredBlog',
-                element: <FeaturedBlog></FeaturedBlog>,
+                element:<PrivateRoute> <FeaturedBlog></FeaturedBlog> </PrivateRoute>,
                 loader: () => fetch(`${import.meta.env.VITE_API_URL}/blogs`),
             },
         ]
