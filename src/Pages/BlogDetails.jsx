@@ -15,7 +15,10 @@ const BlogDetails = () => {
     const isCurrentUserBlogOwner = () => {
         return user?.email === blog.author.email;
     };
-
+    const isNoUser = () => {
+        return !user; // Check if user does not exist
+    };
+   
     // post a comment
     const handleFormSubmit = async e => {
         e.preventDefault()
@@ -44,7 +47,6 @@ const BlogDetails = () => {
             toast.error('Failed to post comment');
         }
     }
-
     // fetch comments from DB
     useEffect(() => {
 
@@ -198,7 +200,7 @@ const BlogDetails = () => {
                 <h1 className="text-xl font-semibold my-4">Comments</h1>
                 <form onSubmit={handleFormSubmit} >
                     <textarea 
-                    disabled={isCurrentUserBlogOwner()}
+                    disabled={isCurrentUserBlogOwner() || isNoUser()} 
                     title={isCurrentUserBlogOwner() ? "You cannot comment on your own blog" : ""}
                     placeholder="Bio" name='comments' id='comments' 
                     className="textarea textarea-bordered textarea-md w-full md:w-2/4" 
@@ -206,7 +208,8 @@ const BlogDetails = () => {
                     <div className="">
                         <button
                             className="py-2 px-4 border rounded-lg bg-gray-500 text-white font-medium"
-                            disabled={isCurrentUserBlogOwner()}
+                            disabled={isCurrentUserBlogOwner() || isNoUser()} 
+                            
                         >
                             Comment
                         </button>
