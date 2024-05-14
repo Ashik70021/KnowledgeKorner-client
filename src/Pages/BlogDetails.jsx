@@ -61,7 +61,7 @@ const BlogDetails = () => {
 
     return (
         <div>
-            <div className="my-16 grid grid-cols-12 container mx-auto">
+            <div className="my-16 grid grid-cols-1 md:grid-cols-12 container mx-auto">
                 {/* left side */}
                 <div className="col-span-9">
                     <div className=" p-4 shadow-md bg-gray-50 text-gray-800">
@@ -194,20 +194,19 @@ const BlogDetails = () => {
             </div>
 
             {/* Comment Section */}
-            <div className="my-16 container mx-auto">
+            <div className="my-16 container mx-auto px-4">
                 <h1 className="text-xl font-semibold my-4">Comments</h1>
                 <form onSubmit={handleFormSubmit} >
                     <textarea 
                     disabled={isCurrentUserBlogOwner()}
                     title={isCurrentUserBlogOwner() ? "You cannot comment on your own blog" : ""}
                     placeholder="Bio" name='comments' id='comments' 
-                    className="textarea textarea-bordered textarea-md w-2/4" 
+                    className="textarea textarea-bordered textarea-md w-full md:w-2/4" 
                     ></textarea>
                     <div className="">
                         <button
                             className="py-2 px-4 border rounded-lg bg-gray-500 text-white font-medium"
                             disabled={isCurrentUserBlogOwner()}
-                            onClick={handleFormSubmit}
                         >
                             Comment
                         </button>
@@ -215,7 +214,7 @@ const BlogDetails = () => {
                 </form>
 
                 {comments.map((comment, index) => (
-                    <div key={index} className="my-6 w-2/4 border-b-2">
+                    <div key={index} className="my-6 w-full md:w-2/4 border-b-2">
                         <div className="flex items-center">
                             <img
                                 className="object-cover h-10 rounded-full"
@@ -233,7 +232,6 @@ const BlogDetails = () => {
                         <div className="mt-2">
                             <p>{comment.comments}</p>
                         </div>
-                        <p className="my-1">{/* timestamp here */}</p>
                     </div>
                 ))}
             </div>
