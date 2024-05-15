@@ -45,7 +45,7 @@ const BlogCard = ({ blog }) => {
 
     return (
         <div className='mx-auto'>
-            <div className="p-4 hover:-translate-y-5 duration-700 relative m-4 max-w-sm border-solid border-2 border-[#912BBC] rounded-md shadow-md dark:bg-gray-50 dark:text-gray-800">
+            <div className="p-4 hover:-translate-y-5 duration-700 relative m-4 max-w-sm border-solid rounded-md shadow-xl dark:bg-gray-50 dark:text-gray-800">
                 <img src={image} alt="" className="object-cover object-center w-full rounded-t-md h-72 dark:bg-gray-500" />
                 <div className="mt-6">
                     <span className="block text-md font-medium tracking-widest uppercase text-cyan-600">{category}</span>

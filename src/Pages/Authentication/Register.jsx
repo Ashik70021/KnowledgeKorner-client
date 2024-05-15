@@ -1,9 +1,9 @@
 import { useContext, useEffect } from "react";
-import bgimg from "../../../public/images/Data_security_05.jpg"
+import bgimg from "/images/Data_security_05.jpg"
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from "../../Provider/AuthProvider";
 import toast from "react-hot-toast";
-import axios from "axios";
+// import axios from "axios";
 
 const Register = () => {
     const navigate = useNavigate()
@@ -58,14 +58,14 @@ const Register = () => {
           // Optimistic UI Update
           setUser({...result?.user, photoURL: photo, displayName: name})
 
-          const {data} = await axios.post(`${import.meta.env.VITE_API_URL}/jwt`, 
-            {
-                email: result?.user?.email,
-            },
-            {
-                withCredentials: true
-            })
-            console.log(data)
+        //   const {data} = await axios.post(`${import.meta.env.VITE_API_URL}/jwt`, 
+        //     {
+        //         email: result?.user?.email,
+        //     },
+        //     {
+        //         withCredentials: true
+        //     })
+        //     console.log(data)
 
             navigate(from, {replace: true})
           toast.success("Signup Successfully")

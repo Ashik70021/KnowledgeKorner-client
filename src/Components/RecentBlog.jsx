@@ -1,12 +1,22 @@
 import { motion } from "framer-motion";
 import BlogCard from "./BlogCard";
+import { useEffect, useState } from "react";
 
-const RecentBlog = ({ blogs }) => {
-    // const { blogs } = blogs;
+const RecentBlog = () => {
+    const [blogs, setBlogs] = useState([]);
+    console.log(blogs)
+    useEffect(() => {
 
-    if (blogs && blogs.length > 6) {
-        blogs = blogs.slice(0, 6);
-    }
+        fetch(`${import.meta.env.VITE_API_URL}/blogs`)
+            .then(res => res.json())
+            .then(data => {
+                if (data && data.length > 6) {
+                    data = data.slice(0, 6);
+                }
+                setBlogs(data);
+            })
+    }, [])
+    
 
     return (
         <div>
