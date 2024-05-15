@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const WishList = () => {
     
-    const { user } = useContext(AuthContext);
+    const { user} = useContext(AuthContext);
     const wishlists = useLoaderData();
     // const [blogs, setBlogs] = useState([]);
     const [filteredBlogs, setFilteredBlogs] = useState([]);
@@ -14,6 +14,7 @@ const WishList = () => {
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
+                
                 const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/blogs`);
                 // setBlogs(data);
 
@@ -21,7 +22,10 @@ const WishList = () => {
                 const userWishlist = wishlists.filter(wishlist => wishlist.email === user.email);
                 const filteredBlogs = data.filter(blog => userWishlist.some(wishlist => wishlist.blog_id === blog._id));
                 setFilteredBlogs(filteredBlogs);
-            } catch (error) {
+            } 
+                
+        
+            catch (error) {
                 console.error("Error fetching blogs:", error);
             }
         };
@@ -50,6 +54,7 @@ const WishList = () => {
                 <h1 className="text-4xl font-bold">My Added Wishlist</h1>
                 <p className="text-xl text-gray-700">Explore timely topics, engaging stories, and expert perspectives to keep your finger on the pulse of what's happening now.</p>
             </div>
+            
             <div className="grid grid-cols-1 md:grid-cols-3 mt-16">
                 {filteredBlogs.map(blog => (
                     <div key={blog._id} className="p-4 hover:-translate-y-5 duration-700 relative m-4 border-solid border-2 border-[#912BBC] max-w-sm rounded-md shadow-md dark:bg-gray-50 dark:text-gray-800">

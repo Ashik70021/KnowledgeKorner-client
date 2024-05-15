@@ -27,18 +27,24 @@ const FeaturedBlog = () => {
         {
             name: "Blog Title",
             selector: row => row.blog_title,
-            sortable: true
+            
         },
         {
             name: 'Blog Owner',
             selector: row => row.blog_owner,
-            sortable: true
+            
+        },
+        {
+            name: 'Owner Image',
+            selector: (row) => <img alt="" className="m-2 w-12 h-12 rounded-full ring-2 bg-gray-500 ring-[#D875C7] ring-offset-gray-100" src={row.Owner_image} />,
+            
         },
     ];
     const data = newBlogs.map((blog, index) => ({
         si: index + 1,
         blog_title: blog.blog_title,
         blog_owner: blog.author.email,
+        Owner_image: blog.author.photo
     }));
 
     return (
@@ -48,7 +54,7 @@ const FeaturedBlog = () => {
                 <p className="text-xl text-gray-700">Explore timely topics, engaging stories, and expert perspectives to keep your finger on the pulse of what's happening now.</p>
             </div>
 
-            <DataTable
+            <DataTable clas
                 columns={columns}
                 data={data}
                 fixedHeader
