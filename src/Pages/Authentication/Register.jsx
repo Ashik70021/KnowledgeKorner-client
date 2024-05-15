@@ -1,12 +1,20 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import bgimg from "../../../public/images/Data_security_05.jpg"
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from "../../Provider/AuthProvider";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 const Register = () => {
     const navigate = useNavigate()
     const { signInWithGoogle, createUser, updateUserProfile, user, setUser } = useContext(AuthContext);
+
+    useEffect(() => {
+        if (user) { 
+          navigate('/')
+        }
+      }, [navigate, user])
+      const from = location.state || '/'
 
     // Google signin
     const handleGoogleSignIn = async () => {
@@ -44,12 +52,24 @@ const Register = () => {
         try {
           //2. User Registration
           const result = await createUser(email, pass)
-          console.log(result)
+
           await updateUserProfile(name, photo)
+          
           // Optimistic UI Update
-          setUser({...user, photoURL: photo, displayName: name})
+          setUser({...result?.user, photoURL: photo, displayName: name})
+
+          const {data} = await axios.post(`${import.meta.env.VITE_API_URL}/jwt`, 
+            {
+                email: result?.user?.email,
+            },
+            {
+                withCredentials: true
+            })
+            console.log(data)
+
+            navigate(from, {replace: true})
           toast.success("Signup Successfully")
-          navigate('/')
+          
         } catch (error) {
           console.log(error)
           toast.error(error?.message)

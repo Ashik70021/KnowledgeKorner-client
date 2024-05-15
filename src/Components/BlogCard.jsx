@@ -7,9 +7,9 @@ import toast from 'react-hot-toast';
 const BlogCard = ({ blog }) => {
     const { user } = useContext(AuthContext);
     const [wishlistBlogs, setWishlistBlogs] = useState([]);
-    console.log(user);
+    // console.log(user);
     const { _id, category, blog_title, description, image } = blog;
-    console.log(_id);
+    // console.log(_id);
 
     const handleWishlist = async () => {
         if (!user) {

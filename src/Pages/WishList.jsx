@@ -2,12 +2,11 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 import axios from 'axios';
-import toast from 'react-hot-toast';
 
 const WishList = () => {
     const { user } = useContext(AuthContext);
     const wishlists = useLoaderData();
-    const [blogs, setBlogs] = useState([]);
+    // const [blogs, setBlogs] = useState([]);
     const [filteredBlogs, setFilteredBlogs] = useState([]);
 
     // Fetch blogs from DB
@@ -15,7 +14,7 @@ const WishList = () => {
         const fetchBlogs = async () => {
             try {
                 const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/blogs`);
-                setBlogs(data);
+                // setBlogs(data);
 
                 // Filter blogs based on the user's wishlist
                 const userWishlist = wishlists.filter(wishlist => wishlist.email === user.email);

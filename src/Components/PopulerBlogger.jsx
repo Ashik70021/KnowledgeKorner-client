@@ -1,7 +1,7 @@
-import img1 from '../../public/images/b1.jpg'
-import img2 from '../../public/images/b2.jpg'
-import img3 from '../../public/images/b3.png'
-import img4 from '../../public/images/b4.jpg'
+import img1 from '/images/b1.jpg'
+import img2 from '/images/b2.jpg'
+import img3 from '/images/b3.png'
+import img4 from '/images/b4.jpg'
 
 const PopulerBlogger = () => {
     return (
