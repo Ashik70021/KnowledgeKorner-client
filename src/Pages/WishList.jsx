@@ -4,6 +4,7 @@ import { AuthContext } from "../Provider/AuthProvider";
 import axios from 'axios';
 
 const WishList = () => {
+    
     const { user } = useContext(AuthContext);
     const wishlists = useLoaderData();
     // const [blogs, setBlogs] = useState([]);

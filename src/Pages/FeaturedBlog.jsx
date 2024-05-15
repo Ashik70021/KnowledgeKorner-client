@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component'
 import { useLoaderData } from 'react-router-dom';
 
+
 const FeaturedBlog = () => {
     const blogs = useLoaderData();
     console.log(blogs)
@@ -14,6 +15,7 @@ const FeaturedBlog = () => {
         const top10Blogs = sortedBlogs.slice(0, 10);
         // Update state with top 10 blogs
         setNewblogs(top10Blogs);
+
     }, [blogs]);
 
     const columns = [
@@ -45,6 +47,7 @@ const FeaturedBlog = () => {
                 <h1 className="text-4xl font-bold">Top 10 Blogs</h1>
                 <p className="text-xl text-gray-700">Explore timely topics, engaging stories, and expert perspectives to keep your finger on the pulse of what's happening now.</p>
             </div>
+
             <DataTable
                 columns={columns}
                 data={data}
