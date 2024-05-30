@@ -12,8 +12,8 @@ const RecentBlog = () => {
         fetch(`${import.meta.env.VITE_API_URL}/blogs`)
             .then(res => res.json())
             .then(data => {
-                if (data && data.length > 6) {
-                    data = data.slice(0, 6);
+                if (data && data.length > 8) {
+                    data = data.slice(0, 8);
                 }
                 setBlogs(data);
             })
@@ -73,7 +73,7 @@ const RecentBlog = () => {
                 </div>
                 </div>
             </div>}
-            <div className="mt-16 grid grid-cols-1 md:grid-cols-3">
+            <div className="mt-16 grid grid-cols-1 md:grid-cols-4">
                 {
                     blogs.map(blog => <BlogCard
                         key={blog._id}

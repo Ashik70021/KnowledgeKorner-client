@@ -3,8 +3,10 @@ import { Link, useLoaderData } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { AiOutlineLike } from "react-icons/ai";
 
 const BlogDetails = () => {
+
     const { user } = useContext(AuthContext)
     const blog = useLoaderData();
     console.log(blog)
@@ -18,7 +20,8 @@ const BlogDetails = () => {
     const isNoUser = () => {
         return !user; // Check if user does not exist
     };
-   
+
+
     // post a comment
     const handleFormSubmit = async e => {
         e.preventDefault()
@@ -58,6 +61,7 @@ const BlogDetails = () => {
                 setComments(specificComments);
             })
     }, [blog._id])
+    
 
 
 
@@ -73,7 +77,7 @@ const BlogDetails = () => {
                             </div>
                             {/* Update Button */}
                             {user?.email === blog.author.email && (
-                               <Link to={`/updateBlog/${blog._id}`}><button className="text-lg font-medium text-white py-1 px-4 border rounded-xl bg-[#912BBC]">
+                                <Link to={`/updateBlog/${blog._id}`}><button className="text-lg font-medium text-white py-1 px-4 border rounded-xl bg-[#912BBC]">
                                     Update
                                 </button></Link>
                             )}
@@ -93,7 +97,15 @@ const BlogDetails = () => {
                             </div>
                         </div>
                     </div>
+
+                    {/* like blog buttor */}
+                    <div className="flex justify-end items-center gap-4 text-2xl mt-8">
+                        <h1>0</h1>
+                        <button><AiOutlineLike /></button>
+                    </div>
+
                 </div>
+
 
                 {/* right side */}
                 <div className="col-span-3">
@@ -199,17 +211,17 @@ const BlogDetails = () => {
             <div className="my-16 container mx-auto px-4">
                 <h1 className="text-xl font-semibold my-4">Comments</h1>
                 <form onSubmit={handleFormSubmit} >
-                    <textarea 
-                    disabled={isCurrentUserBlogOwner() || isNoUser()} 
-                    title={isCurrentUserBlogOwner() ? "You cannot comment on your own blog" : ""}
-                    placeholder="Bio" name='comments' id='comments' 
-                    className="textarea textarea-bordered textarea-md w-full md:w-2/4" 
+                    <textarea
+                        disabled={isCurrentUserBlogOwner() || isNoUser()}
+                        title={isCurrentUserBlogOwner() ? "You cannot comment on your own blog" : ""}
+                        placeholder="Bio" name='comments' id='comments'
+                        className="textarea textarea-bordered textarea-md w-full md:w-2/4"
                     ></textarea>
                     <div className="">
                         <button
                             className="py-2 px-4 border rounded-lg bg-gray-500 text-white font-medium"
-                            disabled={isCurrentUserBlogOwner() || isNoUser()} 
-                            
+                            disabled={isCurrentUserBlogOwner() || isNoUser()}
+
                         >
                             Comment
                         </button>
